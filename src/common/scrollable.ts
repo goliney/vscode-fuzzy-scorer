@@ -6,7 +6,7 @@
 import { Emitter, Event } from './event';
 import { Disposable, IDisposable } from './lifecycle';
 
-export const enum ScrollbarVisibility {
+export enum ScrollbarVisibility {
   Auto = 1,
   Hidden = 2,
   Visible = 3,

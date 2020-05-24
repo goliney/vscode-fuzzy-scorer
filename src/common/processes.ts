@@ -50,7 +50,7 @@ export interface ForkOptions extends CommandOptions {
   execArgv?: string[];
 }
 
-export const enum Source {
+export enum Source {
   stdout,
   stderr,
 }
@@ -80,7 +80,7 @@ export interface TerminateResponse {
   error?: any;
 }
 
-export const enum TerminateResponseCode {
+export enum TerminateResponseCode {
   Success = 0,
   Unknown = 1,
   AccessDenied = 2,

@@ -1086,7 +1086,7 @@ export function breakBetweenGraphemeBreakType(
   return true;
 }
 
-export const enum GraphemeBreakType {
+export enum GraphemeBreakType {
   Other = 0,
   Prepend = 1,
   CR = 2,

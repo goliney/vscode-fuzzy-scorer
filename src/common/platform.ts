@@ -86,7 +86,7 @@ if (typeof navigator === 'object' && !isElectronRenderer) {
   _isNative = true;
 }
 
-export const enum Platform {
+export enum Platform {
   Web,
   Mac,
   Linux,
@@ -213,7 +213,7 @@ export const setImmediate: ISetImmediate = (function defineSetImmediate() {
   return (callback: (...args: any[]) => void) => _promise.then(callback);
 })();
 
-export const enum OperatingSystem {
+export enum OperatingSystem {
   Windows = 1,
   Macintosh = 2,
   Linux = 3,

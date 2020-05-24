@@ -11,7 +11,7 @@ import { illegalArgument } from './errors';
  * Inspired somewhat from https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
  * But these are "more general", as they should work across browsers & OS`s.
  */
-export const enum KeyCode {
+export enum KeyCode {
   /**
    * Placed first to cover the 0 value of the enum.
    */
@@ -401,7 +401,7 @@ const enum BinaryKeybindingsMask {
   KeyCode = 0x000000ff,
 }
 
-export const enum KeyMod {
+export enum KeyMod {
   CtrlCmd = (1 << 11) >>> 0,
   Shift = (1 << 10) >>> 0,
   Alt = (1 << 9) >>> 0,

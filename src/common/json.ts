@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export const enum ScanError {
+export enum ScanError {
   None = 0,
   UnexpectedEndOfComment = 1,
   UnexpectedEndOfString = 2,
@@ -13,7 +13,7 @@ export const enum ScanError {
   InvalidCharacter = 6,
 }
 
-export const enum SyntaxKind {
+export enum SyntaxKind {
   OpenBraceToken = 1,
   CloseBraceToken = 2,
   OpenBracketToken = 3,
@@ -77,7 +77,7 @@ export interface ParseError {
   length: number;
 }
 
-export const enum ParseErrorCode {
+export enum ParseErrorCode {
   InvalidSymbol = 1,
   InvalidNumberFormat = 2,
   PropertyNameExpected = 3,

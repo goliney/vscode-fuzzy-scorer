@@ -1,78 +1,81 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Parser = exports.ValidationStatus = exports.ValidationState = void 0;
+
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+let ValidationState;
+exports.ValidationState = ValidationState;
 
-export enum ValidationState {
-  OK = 0,
-  Info = 1,
-  Warning = 2,
-  Error = 3,
-  Fatal = 4,
-}
+(function (ValidationState) {
+  ValidationState[ValidationState["OK"] = 0] = "OK";
+  ValidationState[ValidationState["Info"] = 1] = "Info";
+  ValidationState[ValidationState["Warning"] = 2] = "Warning";
+  ValidationState[ValidationState["Error"] = 3] = "Error";
+  ValidationState[ValidationState["Fatal"] = 4] = "Fatal";
+})(ValidationState || (exports.ValidationState = ValidationState = {}));
 
-export class ValidationStatus {
-  private _state: ValidationState;
-
+class ValidationStatus {
   constructor() {
     this._state = ValidationState.OK;
   }
 
-  public get state(): ValidationState {
+  get state() {
     return this._state;
   }
 
-  public set state(value: ValidationState) {
+  set state(value) {
     if (value > this._state) {
       this._state = value;
     }
   }
 
-  public isOK(): boolean {
+  isOK() {
     return this._state === ValidationState.OK;
   }
 
-  public isFatal(): boolean {
+  isFatal() {
     return this._state === ValidationState.Fatal;
   }
+
 }
 
-export interface IProblemReporter {
-  info(message: string): void;
-  warn(message: string): void;
-  error(message: string): void;
-  fatal(message: string): void;
-  status: ValidationStatus;
-}
+exports.ValidationStatus = ValidationStatus;
 
-export abstract class Parser {
-  private _problemReporter: IProblemReporter;
-
-  constructor(problemReporter: IProblemReporter) {
+class Parser {
+  constructor(problemReporter) {
     this._problemReporter = problemReporter;
   }
 
-  public reset(): void {
+  reset() {
     this._problemReporter.status.state = ValidationState.OK;
   }
 
-  public get problemReporter(): IProblemReporter {
+  get problemReporter() {
     return this._problemReporter;
   }
 
-  public info(message: string): void {
+  info(message) {
     this._problemReporter.info(message);
   }
 
-  public warn(message: string): void {
+  warn(message) {
     this._problemReporter.warn(message);
   }
 
-  public error(message: string): void {
+  error(message) {
     this._problemReporter.error(message);
   }
 
-  public fatal(message: string): void {
+  fatal(message) {
     this._problemReporter.fatal(message);
   }
+
 }
+
+exports.Parser = Parser;
