@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { pad } from './strings';
-import { localize } from 'vs/nls';
+import { localize } from './nls';
 
 const minute = 60;
 const hour = minute * 60;

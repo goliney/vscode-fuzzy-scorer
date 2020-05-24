@@ -21,4 +21,4 @@ const plugins = [
   ],
 ];
 
-module.exports = { presets, plugins, ignore: ['src/@types'] };
+module.exports = { presets, plugins };
