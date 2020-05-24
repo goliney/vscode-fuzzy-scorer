@@ -19,6 +19,18 @@ function compareItemsByScore(itemA, itemB, query, accessor) {
     Object.create(null)
   );
 }
+
+function doScore(target, query) {
+  const preparedQuery = scorer.prepareQuery(query);
+
+  return scorer.scoreFuzzy(
+    target,
+    preparedQuery.normalized,
+    preparedQuery.normalizedLowercase,
+    true
+  );
+}
+
 class ResourceAccessorClass {
   getItemLabel(resource) {
     return basename(resource.fsPath);
@@ -42,3 +54,5 @@ const res = [resourceA, resourceB, resourceC].sort((r1, r2) =>
 );
 
 console.log(res);
+
+console.log(doScore('Hello-World', 'H-Worl'));
