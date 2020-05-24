@@ -12,4 +12,13 @@ const presets = [
   ],
 ];
 
-module.exports = { presets, ignore: ['src/@types'] };
+const plugins = [
+  [
+    '@babel/plugin-transform-typescript',
+    {
+      allowNamespaces: true,
+    },
+  ],
+];
+
+module.exports = { presets, plugins, ignore: ['src/@types'] };

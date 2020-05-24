@@ -31,5 +31,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     // We use underscore dangle, especially in tests
     'no-underscore-dangle': 'off',
+    // Guys at Microsoft wrote vscode with "I" prefixes
+    '@typescript-eslint/interface-name-prefix': 'off',
   },
 };
