@@ -1,11 +1,12 @@
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Licensed under the MIT License. See vscode.licence.txt for license information.
  *--------------------------------------------------------------------------------------------*/
 
 let _isWindows = false;
 let _isMacintosh = false;
 let _isLinux = false;
+let _isWeb = false;
 let _userAgent: string | undefined = undefined;
 
 export interface IProcessEnvironment {
@@ -45,6 +46,7 @@ if (typeof navigator === 'object' && !isElectronRenderer) {
   _isWindows = _userAgent.indexOf('Windows') >= 0;
   _isMacintosh = _userAgent.indexOf('Macintosh') >= 0;
   _isLinux = _userAgent.indexOf('Linux') >= 0;
+  _isWeb = true;
 } else if (typeof process === 'object') {
   _isWindows = process.platform === 'win32';
   _isMacintosh = process.platform === 'darwin';
@@ -54,6 +56,7 @@ if (typeof navigator === 'object' && !isElectronRenderer) {
 export const isWindows = _isWindows;
 export const isMacintosh = _isMacintosh;
 export const isLinux = _isLinux;
+export const isWeb = _isWeb;
 
 const _globals =
   typeof self === 'object' ? self : typeof global === 'object' ? global : ({} as any);

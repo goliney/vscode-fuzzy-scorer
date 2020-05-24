@@ -1,26 +1,19 @@
-# fuzzy-path-search
+# vscode-fuzzy-scorer
 
-[![Build Status](https://travis-ci.com/goliney/fuzzy-path-search.svg?branch=master)](https://travis-ci.com/goliney/fuzzy-path-search)
-[![npm version](https://badge.fury.io/js/fuzzy-path-search.svg)](https://www.npmjs.com/package/fuzzy-path-search)
+[![Build Status](https://travis-ci.com/goliney/vscode-fuzzy-scorer.svg?branch=master)](https://travis-ci.com/goliney/vscode-fuzzy-scorer)
+[![npm version](https://badge.fury.io/js/vscode-fuzzy-scorer.svg)](https://www.npmjs.com/package/vscode-fuzzy-scorer)
 
-Build interactive config-based command line interfaces with JavaScript :wink:
-
-
-## Table of Contents
-
-- [Install](#install)
-- [Usage](#usage)
-
+A shameless rip off of [vscode](https://github.com/Microsoft/vscode/) fuzzy scorer module
+used to search files and stuff.
 
 ## Install
 
 ```shell script
-npm install --save fuzzy-path-search
+npm install --save vscode-fuzzy-scorer
 ```
 
 ## Usage
 Run:
 ```js
-import fuzzyPathSearch from 'fuzzy-path-search';
-
+import scorer from 'vscode-fuzzy-scorer';
 ```

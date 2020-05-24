@@ -9,7 +9,7 @@ require("core-js/modules/es.promise");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setImmediate = exports.globals = exports.isLinux = exports.isMacintosh = exports.isWindows = void 0;
+exports.setImmediate = exports.globals = exports.isWeb = exports.isLinux = exports.isMacintosh = exports.isWindows = void 0;
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -18,6 +18,7 @@ exports.setImmediate = exports.globals = exports.isLinux = exports.isMacintosh =
 let _isWindows = false;
 let _isMacintosh = false;
 let _isLinux = false;
+let _isWeb = false;
 let _userAgent = undefined;
 const isElectronRenderer = typeof process !== 'undefined' && typeof process.versions !== 'undefined' && typeof process.versions.electron !== 'undefined' && process.type === 'renderer'; // OS detection
 
@@ -26,6 +27,7 @@ if (typeof navigator === 'object' && !isElectronRenderer) {
   _isWindows = _userAgent.indexOf('Windows') >= 0;
   _isMacintosh = _userAgent.indexOf('Macintosh') >= 0;
   _isLinux = _userAgent.indexOf('Linux') >= 0;
+  _isWeb = true;
 } else if (typeof process === 'object') {
   _isWindows = process.platform === 'win32';
   _isMacintosh = process.platform === 'darwin';
@@ -38,6 +40,8 @@ const isMacintosh = _isMacintosh;
 exports.isMacintosh = isMacintosh;
 const isLinux = _isLinux;
 exports.isLinux = isLinux;
+const isWeb = _isWeb;
+exports.isWeb = isWeb;
 
 const _globals = typeof self === 'object' ? self : typeof global === 'object' ? global : {};
 
