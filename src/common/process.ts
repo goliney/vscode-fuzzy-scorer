@@ -33,4 +33,3 @@ const safeProcess: IProcess =
 export const cwd = safeProcess.cwd;
 export const env = safeProcess.env;
 export const platform = safeProcess.platform;
-export const nextTick = safeProcess.nextTick;

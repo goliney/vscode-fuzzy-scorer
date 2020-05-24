@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { CharCode } from './charCode';
-import { LRUCache } from './map';
 import * as strings from './strings';
 
 export interface IFilter {
@@ -380,47 +379,6 @@ function nextWord(word: string, start: number): number {
 }
 
 // Fuzzy
-
-const fuzzyContiguousFilter = or(matchesPrefix, matchesCamelCase, matchesContiguousSubString);
-const fuzzySeparateFilter = or(matchesPrefix, matchesCamelCase, matchesSubString);
-const fuzzyRegExpCache = new LRUCache<string, RegExp>(10000); // bounded to 10000 elements
-
-export function matchesFuzzy(
-  word: string,
-  wordToMatchAgainst: string,
-  enableSeparateSubstringMatching = false
-): IMatch[] | null {
-  if (typeof word !== 'string' || typeof wordToMatchAgainst !== 'string') {
-    return null; // return early for invalid input
-  }
-
-  // Form RegExp for wildcard matches
-  let regexp = fuzzyRegExpCache.get(word);
-  if (!regexp) {
-    regexp = new RegExp(strings.convertSimple2RegExpPattern(word), 'i');
-    fuzzyRegExpCache.set(word, regexp);
-  }
-
-  // RegExp Filter
-  const match = regexp.exec(wordToMatchAgainst);
-  if (match) {
-    return [{ start: match.index, end: match.index + match[0].length }];
-  }
-
-  // Default Filter
-  return enableSeparateSubstringMatching
-    ? fuzzySeparateFilter(word, wordToMatchAgainst)
-    : fuzzyContiguousFilter(word, wordToMatchAgainst);
-}
-
-/**
- * Match pattern againt word in a fuzzy way. As in IntelliSense and faster and more
- * powerfull than `matchesFuzzy`
- */
-export function matchesFuzzy2(pattern: string, word: string): IMatch[] | null {
-  const score = fuzzyScore(pattern, pattern.toLowerCase(), 0, word, word.toLowerCase(), 0, true);
-  return score ? createMatches(score) : null;
-}
 
 export function anyScore(
   pattern: string,

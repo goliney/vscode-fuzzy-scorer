@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nextTick = exports.platform = exports.env = exports.cwd = void 0;
+exports.platform = exports.env = exports.cwd = void 0;
 
 var _platform = require("./platform");
 
@@ -33,5 +33,3 @@ const env = safeProcess.env;
 exports.env = env;
 const platform = safeProcess.platform;
 exports.platform = platform;
-const nextTick = safeProcess.nextTick;
-exports.nextTick = nextTick;

@@ -8,8 +8,6 @@ require("core-js/modules/es.array.map");
 
 require("core-js/modules/es.array.slice");
 
-require("core-js/modules/es.regexp.constructor");
-
 require("core-js/modules/es.set");
 
 require("core-js/modules/es.string.split");
@@ -25,8 +23,6 @@ exports.matchesSubString = matchesSubString;
 exports.isUpper = isUpper;
 exports.matchesCamelCase = matchesCamelCase;
 exports.matchesWords = matchesWords;
-exports.matchesFuzzy = matchesFuzzy;
-exports.matchesFuzzy2 = matchesFuzzy2;
 exports.anyScore = anyScore;
 exports.createMatches = createMatches;
 exports.isPatternInWord = isPatternInWord;
@@ -36,8 +32,6 @@ exports.fuzzyScoreGraceful = fuzzyScoreGraceful;
 exports.FuzzyScore = exports.matchesPrefix = exports.matchesStrictPrefix = void 0;
 
 var _charCode = require("./charCode");
-
-var _map = require("./map");
 
 var strings = _interopRequireWildcard(require("./strings"));
 
@@ -408,47 +402,6 @@ function nextWord(word, start) {
   return word.length;
 } // Fuzzy
 
-
-const fuzzyContiguousFilter = or(matchesPrefix, matchesCamelCase, matchesContiguousSubString);
-const fuzzySeparateFilter = or(matchesPrefix, matchesCamelCase, matchesSubString);
-const fuzzyRegExpCache = new _map.LRUCache(10000); // bounded to 10000 elements
-
-function matchesFuzzy(word, wordToMatchAgainst, enableSeparateSubstringMatching = false) {
-  if (typeof word !== 'string' || typeof wordToMatchAgainst !== 'string') {
-    return null; // return early for invalid input
-  } // Form RegExp for wildcard matches
-
-
-  let regexp = fuzzyRegExpCache.get(word);
-
-  if (!regexp) {
-    regexp = new RegExp(strings.convertSimple2RegExpPattern(word), 'i');
-    fuzzyRegExpCache.set(word, regexp);
-  } // RegExp Filter
-
-
-  const match = regexp.exec(wordToMatchAgainst);
-
-  if (match) {
-    return [{
-      start: match.index,
-      end: match.index + match[0].length
-    }];
-  } // Default Filter
-
-
-  return enableSeparateSubstringMatching ? fuzzySeparateFilter(word, wordToMatchAgainst) : fuzzyContiguousFilter(word, wordToMatchAgainst);
-}
-/**
- * Match pattern againt word in a fuzzy way. As in IntelliSense and faster and more
- * powerfull than `matchesFuzzy`
- */
-
-
-function matchesFuzzy2(pattern, word) {
-  const score = fuzzyScore(pattern, pattern.toLowerCase(), 0, word, word.toLowerCase(), 0, true);
-  return score ? createMatches(score) : null;
-}
 
 function anyScore(pattern, lowPattern, _patternPos, word, lowWord, _wordPos) {
   const result = fuzzyScore(pattern, lowPattern, 0, word, lowWord, 0, true);
