@@ -73,7 +73,7 @@ export class IdleValue<T> {
   private readonly _executor: () => void;
   private readonly _handle: IDisposable;
 
-  private _didRun: boolean = false;
+  private _didRun = false;
   private _value?: T;
   private _error: any;
 

@@ -635,7 +635,8 @@ function _asFormatted(uri: URI, skipEncoding: boolean): string {
   const encoder = !skipEncoding ? encodeURIComponentFast : encodeURIComponentMinimal;
 
   let res = '';
-  let { scheme, authority, path, query, fragment } = uri;
+  const { scheme, query, fragment } = uri;
+  let { authority, path } = uri;
   if (scheme) {
     res += scheme;
     res += ':';

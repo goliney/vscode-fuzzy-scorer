@@ -818,8 +818,8 @@ function computeLabelAndDescriptionMatchDistance<T>(
   score: IItemScore,
   accessor: IItemAccessor<T>
 ): number {
-  let matchStart: number = -1;
-  let matchEnd: number = -1;
+  let matchStart = -1;
+  let matchEnd = -1;
 
   // If we have description matches, the start is first of description match
   if (score.descriptionMatch && score.descriptionMatch.length) {

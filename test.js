@@ -1,6 +1,6 @@
-const scorer = require('./dist/common/fuzzyScorer');
-const path = require('./dist/common/path');
-const uri = require('./dist/common/uri');
+const scorer = require('./dist/vscode_common/fuzzyScorer');
+const path = require('./dist/vscode_common/path');
+const uri = require('./dist/vscode_common/uri');
 
 const { basename, dirname } = path;
 const { URI } = uri;

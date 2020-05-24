@@ -1,0 +1,4 @@
+__coverage__
+/dist
+/node_modules
+vscode_common

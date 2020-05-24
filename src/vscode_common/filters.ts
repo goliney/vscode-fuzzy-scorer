@@ -64,49 +64,6 @@ function _matchesPrefix(
   return word.length > 0 ? [{ start: 0, end: word.length }] : [];
 }
 
-// Contiguous Substring
-
-export function matchesContiguousSubString(
-  word: string,
-  wordToMatchAgainst: string
-): IMatch[] | null {
-  const index = wordToMatchAgainst.toLowerCase().indexOf(word.toLowerCase());
-  if (index === -1) {
-    return null;
-  }
-
-  return [{ start: index, end: index + word.length }];
-}
-
-// Substring
-
-export function matchesSubString(word: string, wordToMatchAgainst: string): IMatch[] | null {
-  return _matchesSubString(word.toLowerCase(), wordToMatchAgainst.toLowerCase(), 0, 0);
-}
-
-function _matchesSubString(
-  word: string,
-  wordToMatchAgainst: string,
-  i: number,
-  j: number
-): IMatch[] | null {
-  if (i === word.length) {
-    return [];
-  } else if (j === wordToMatchAgainst.length) {
-    return null;
-  } else {
-    if (word[i] === wordToMatchAgainst[j]) {
-      let result: IMatch[] | null = null;
-      if ((result = _matchesSubString(word, wordToMatchAgainst, i + 1, j + 1))) {
-        return join({ start: j, end: j + 1 }, result);
-      }
-      return null;
-    }
-
-    return _matchesSubString(word, wordToMatchAgainst, i, j + 1);
-  }
-}
-
 // CamelCase
 
 function isLower(code: number): boolean {
@@ -132,14 +89,6 @@ function isWhitespace(code: number): boolean {
 
 const wordSeparators = new Set<number>();
 '`~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?'.split('').forEach(s => wordSeparators.add(s.charCodeAt(0)));
-
-function isWordSeparator(code: number): boolean {
-  return isWhitespace(code) || wordSeparators.has(code);
-}
-
-function charactersMatch(codeA: number, codeB: number): boolean {
-  return codeA === codeB || (isWordSeparator(codeA) && isWordSeparator(codeB));
-}
 
 function isAlphanumeric(code: number): boolean {
   return isLower(code) || isUpper(code) || isNumber(code);
@@ -316,100 +265,7 @@ export function matchesCamelCase(word: string, camelCaseWord: string): IMatch[] 
   return result;
 }
 
-// Matches beginning of words supporting non-ASCII languages
-// If `contiguous` is true then matches word with beginnings of the words in the target. E.g. "pul" will match "Git: Pull"
-// Otherwise also matches sub string of the word with beginnings of the words in the target. E.g. "gp" or "g p" will match "Git: Pull"
-// Useful in cases where the target is words (e.g. command labels)
-
-export function matchesWords(
-  word: string,
-  target: string,
-  contiguous: boolean = false
-): IMatch[] | null {
-  if (!target || target.length === 0) {
-    return null;
-  }
-
-  let result: IMatch[] | null = null;
-  let i = 0;
-
-  word = word.toLowerCase();
-  target = target.toLowerCase();
-  while (i < target.length && (result = _matchesWords(word, target, 0, i, contiguous)) === null) {
-    i = nextWord(target, i + 1);
-  }
-
-  return result;
-}
-
-function _matchesWords(
-  word: string,
-  target: string,
-  i: number,
-  j: number,
-  contiguous: boolean
-): IMatch[] | null {
-  if (i === word.length) {
-    return [];
-  } else if (j === target.length) {
-    return null;
-  } else if (!charactersMatch(word.charCodeAt(i), target.charCodeAt(j))) {
-    return null;
-  } else {
-    let result: IMatch[] | null = null;
-    let nextWordIndex = j + 1;
-    result = _matchesWords(word, target, i + 1, j + 1, contiguous);
-    if (!contiguous) {
-      while (!result && (nextWordIndex = nextWord(target, nextWordIndex)) < target.length) {
-        result = _matchesWords(word, target, i + 1, nextWordIndex, contiguous);
-        nextWordIndex++;
-      }
-    }
-    return result === null ? null : join({ start: j, end: j + 1 }, result);
-  }
-}
-
-function nextWord(word: string, start: number): number {
-  for (let i = start; i < word.length; i++) {
-    if (isWordSeparator(word.charCodeAt(i)) || (i > 0 && isWordSeparator(word.charCodeAt(i - 1)))) {
-      return i;
-    }
-  }
-  return word.length;
-}
-
 // Fuzzy
-
-export function anyScore(
-  pattern: string,
-  lowPattern: string,
-  _patternPos: number,
-  word: string,
-  lowWord: string,
-  _wordPos: number
-): FuzzyScore {
-  const result = fuzzyScore(pattern, lowPattern, 0, word, lowWord, 0, true);
-  if (result) {
-    return result;
-  }
-  let matches = 0;
-  let score = 0;
-  let idx = _wordPos;
-  for (let patternPos = 0; patternPos < lowPattern.length && patternPos < _maxLen; ++patternPos) {
-    const wordPos = lowWord.indexOf(lowPattern.charAt(patternPos), idx);
-    if (wordPos >= 0) {
-      score += 1;
-      matches += 2 ** wordPos;
-      idx = wordPos + 1;
-    } else if (matches !== 0) {
-      // once we have started matching things
-      // we need to match the remaining pattern
-      // characters
-      break;
-    }
-  }
-  return [score, matches, _wordPos];
-}
 
 //#region --- fuzzyScore ---
 
@@ -577,18 +433,6 @@ export namespace FuzzyScore {
   export function isDefault(score?: FuzzyScore): score is [-100, 0, 0] {
     return !score || (score[0] === -100 && score[1] === 0 && score[2] === 0);
   }
-}
-
-export interface FuzzyScorer {
-  (
-    pattern: string,
-    lowPattern: string,
-    patternPos: number,
-    word: string,
-    lowWord: string,
-    wordPos: number,
-    firstMatchCanBeWeak: boolean
-  ): FuzzyScore | undefined;
 }
 
 export function fuzzyScore(
@@ -822,125 +666,6 @@ function _findAllMatches2(
     _topScore = total;
     _topMatch2 = matches;
   }
-}
-
-//#endregion
-
-//#region --- graceful ---
-
-export function fuzzyScoreGracefulAggressive(
-  pattern: string,
-  lowPattern: string,
-  patternPos: number,
-  word: string,
-  lowWord: string,
-  wordPos: number,
-  firstMatchCanBeWeak: boolean
-): FuzzyScore | undefined {
-  return fuzzyScoreWithPermutations(
-    pattern,
-    lowPattern,
-    patternPos,
-    word,
-    lowWord,
-    wordPos,
-    true,
-    firstMatchCanBeWeak
-  );
-}
-
-export function fuzzyScoreGraceful(
-  pattern: string,
-  lowPattern: string,
-  patternPos: number,
-  word: string,
-  lowWord: string,
-  wordPos: number,
-  firstMatchCanBeWeak: boolean
-): FuzzyScore | undefined {
-  return fuzzyScoreWithPermutations(
-    pattern,
-    lowPattern,
-    patternPos,
-    word,
-    lowWord,
-    wordPos,
-    false,
-    firstMatchCanBeWeak
-  );
-}
-
-function fuzzyScoreWithPermutations(
-  pattern: string,
-  lowPattern: string,
-  patternPos: number,
-  word: string,
-  lowWord: string,
-  wordPos: number,
-  aggressive: boolean,
-  firstMatchCanBeWeak: boolean
-): FuzzyScore | undefined {
-  let top = fuzzyScore(
-    pattern,
-    lowPattern,
-    patternPos,
-    word,
-    lowWord,
-    wordPos,
-    firstMatchCanBeWeak
-  );
-
-  if (top && !aggressive) {
-    // when using the original pattern yield a result we`
-    // return it unless we are aggressive and try to find
-    // a better alignment, e.g. `cno` -> `^co^ns^ole` or `^c^o^nsole`.
-    return top;
-  }
-
-  if (pattern.length >= 3) {
-    // When the pattern is long enough then try a few (max 7)
-    // permutations of the pattern to find a better match. The
-    // permutations only swap neighbouring characters, e.g
-    // `cnoso` becomes `conso`, `cnsoo`, `cnoos`.
-    const tries = Math.min(7, pattern.length - 1);
-    for (let movingPatternPos = patternPos + 1; movingPatternPos < tries; movingPatternPos++) {
-      const newPattern = nextTypoPermutation(pattern, movingPatternPos);
-      if (newPattern) {
-        const candidate = fuzzyScore(
-          newPattern,
-          newPattern.toLowerCase(),
-          patternPos,
-          word,
-          lowWord,
-          wordPos,
-          firstMatchCanBeWeak
-        );
-        if (candidate) {
-          candidate[0] -= 3; // permutation penalty
-          if (!top || candidate[0] > top[0]) {
-            top = candidate;
-          }
-        }
-      }
-    }
-  }
-
-  return top;
-}
-
-function nextTypoPermutation(pattern: string, patternPos: number): string | undefined {
-  if (patternPos + 1 >= pattern.length) {
-    return undefined;
-  }
-
-  const swap1 = pattern[patternPos];
-  const swap2 = pattern[patternPos + 1];
-
-  if (swap1 === swap2) {
-    return undefined;
-  }
-
-  return pattern.slice(0, patternPos) + swap2 + swap1 + pattern.slice(patternPos + 2);
 }
 
 //#endregion

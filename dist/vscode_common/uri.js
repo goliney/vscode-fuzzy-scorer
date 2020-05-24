@@ -574,11 +574,11 @@ function uriToFsPath(uri, keepDriveLetterCasing) {
 function _asFormatted(uri, skipEncoding) {
   const encoder = !skipEncoding ? encodeURIComponentFast : encodeURIComponentMinimal;
   let res = '';
-  let scheme = uri.scheme,
-      authority = uri.authority,
-      path = uri.path,
-      query = uri.query,
-      fragment = uri.fragment;
+  const scheme = uri.scheme,
+        query = uri.query,
+        fragment = uri.fragment;
+  let authority = uri.authority,
+      path = uri.path;
 
   if (scheme) {
     res += scheme;
