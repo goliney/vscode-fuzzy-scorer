@@ -31,9 +31,9 @@ console.log(result);
 /*
 Result:
 [
-  '/some/path/other/fileB.txt'
-  '/some/path/fileA.txt'
-  '/unrelated/some/path/other/fileC.txt'
+  '/some/path/other/fileB.txt'                // pathB
+  '/some/path/fileA.txt'                      // pathA
+  '/unrelated/some/path/other/fileC.txt'      // pathC
 ]
 */
 ```
