@@ -15,7 +15,7 @@ var _async = require("./async");
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *  Licensed under the MIT License. See vscode.licence.txt for license information.
  *--------------------------------------------------------------------------------------------*/
 // When comparing large numbers of strings, such as in sorting large arrays, is better for
 // performance to create an Intl.Collator object and use the function provided by its compare
