@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.IdleValue = exports.runWhenIdle = void 0;
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See vscode.licence.txt for license information.
@@ -70,9 +72,9 @@ exports.runWhenIdle = runWhenIdle;
 
 
 class IdleValue {
-  _didRun = false;
-
   constructor(executor) {
+    _defineProperty(this, "_didRun", false);
+
     this._executor = () => {
       try {
         this._value = executor();

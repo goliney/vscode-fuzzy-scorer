@@ -19,6 +19,7 @@ const plugins = [
       allowNamespaces: true,
     },
   ],
+  '@babel/plugin-proposal-class-properties',
 ];
 
 module.exports = { presets, plugins };
