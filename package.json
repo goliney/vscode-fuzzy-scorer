@@ -1,7 +1,7 @@
 {
   "name": "vscode-fuzzy-scorer",
-  "version": "0.0.1",
-  "description": "A shameless rip off of vscode fuzzy scorer module used to search files and stuff",
+  "version": "0.0.2",
+  "description": "A shameless rip off of vscode fuzzy scorer algorithm used to search files and stuff",
   "main": "dist/index.js",
   "files": [
     "dist"
