@@ -40,6 +40,8 @@ Result:
 or
 
 ```js
+import { scoreFilePathFuzzy } from 'vscode-fuzzy-scorer';
+
 const path = '/xyz/some/path/someFile123.txt';
 const query = 'xyz some';
 const result = scoreFilePathFuzzy({ path, query });
