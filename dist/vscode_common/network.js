@@ -15,10 +15,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See vscode.licence.txt for license information.
- *--------------------------------------------------------------------------------------------*/
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 let Schemas;
 exports.Schemas = Schemas;
 
@@ -45,11 +43,17 @@ exports.Schemas = Schemas;
 })(Schemas || (exports.Schemas = Schemas = {}));
 
 class RemoteAuthoritiesImpl {
-  _hosts = Object.create(null);
-  _ports = Object.create(null);
-  _connectionTokens = Object.create(null);
-  _preferredWebSchema = 'http';
-  _delegate = null;
+  constructor() {
+    _defineProperty(this, "_hosts", Object.create(null));
+
+    _defineProperty(this, "_ports", Object.create(null));
+
+    _defineProperty(this, "_connectionTokens", Object.create(null));
+
+    _defineProperty(this, "_preferredWebSchema", 'http');
+
+    _defineProperty(this, "_delegate", null);
+  }
 
   setPreferredWebSchema(schema) {
     this._preferredWebSchema = schema;
