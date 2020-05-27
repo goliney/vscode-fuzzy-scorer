@@ -16,14 +16,14 @@ npm install --save vscode-fuzzy-scorer
 ```js
 import { compareFilePathsByFuzzyScore } from 'vscode-fuzzy-scorer';
 
-const pathA = '/some/path/fileA.txt';
-const pathB = '/some/path/other/fileB.txt';
-const pathC = '/unrelated/some/path/other/fileC.txt';
+const sourceA = '/some/path/fileA.txt';
+const sourceB = '/some/path/other/fileB.txt';
+const sourceC = '/unrelated/some/path/other/fileC.txt';
 
 const query = 'path fileB';
 
-const result = [pathA, pathB, pathC].sort((r1, r2) =>
-  compareFilePathsByFuzzyScore({ itemA: r1, itemB: r2, query })
+const result = [sourceA, sourceB, sourceC].sort((r1, r2) =>
+  compareFilePathsByFuzzyScore({ pathA: r1, pathB: r2, query })
 );
 
 console.log(result);
@@ -31,9 +31,9 @@ console.log(result);
 /*
 Result:
 [
-  '/some/path/other/fileB.txt'                // pathB
-  '/some/path/fileA.txt'                      // pathA
-  '/unrelated/some/path/other/fileC.txt'      // pathC
+  '/some/path/other/fileB.txt'                // sourceB
+  '/some/path/fileA.txt'                      // sourceA
+  '/unrelated/some/path/other/fileC.txt'      // sourceC
 ]
 */
 ```
