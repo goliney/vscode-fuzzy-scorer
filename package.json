@@ -1,12 +1,13 @@
 {
   "name": "vscode-fuzzy-scorer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A shameless rip off of vscode fuzzy scorer algorithm used to search files and stuff",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
+    "ts-declaration": "tsc --project tsconfig.json --outDir dist --emitDeclarationOnly true --declaration true --noEmit false",
     "build": "babel src --out-dir dist --extensions .ts",
     "typecheck": "tsc",
     "eslint": "eslint --ext .js,.ts ./",
