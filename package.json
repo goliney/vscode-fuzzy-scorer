@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "ts-declaration": "tsc --project tsconfig.json --outDir dist --emitDeclarationOnly true --declaration true",
+    "ts-declaration": "tsc --project tsconfig.json --outDir dist --emitDeclarationOnly true --declaration true --noEmit false",
     "build": "babel src --out-dir dist --extensions .ts",
     "typecheck": "tsc",
     "eslint": "eslint --ext .js,.ts ./",
